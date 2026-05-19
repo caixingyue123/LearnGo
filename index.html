@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Go 45 天学习计划</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">LearnGo</p>
+          <h1>Go 后端开发 45 天学习日历</h1>
+        </div>
+        <button id="progressPanel" class="progress-panel" type="button" aria-label="查看 45 天总体完成情况速览">
+          <div class="progress-number"><span id="doneCount">0</span>/45</div>
+          <div class="progress-track">
+            <div id="progressBar" class="progress-fill"></div>
+          </div>
+          <div id="progressText" class="progress-text">完成 0%</div>
+        </button>
+      </section>
+
+      <section class="layout">
+        <section class="detail-panel" aria-live="polite">
+          <div class="day-head">
+            <div>
+              <p id="stageLabel" class="stage-label">第 1 阶段</p>
+              <h2 id="dayTitle">Day 1</h2>
+              <p id="dayGoal" class="day-goal"></p>
+              <p id="quoteText" class="quote-inline"></p>
+            </div>
+            <div id="statusBadge" class="status-badge pending">未完成</div>
+          </div>
+
+          <div class="task-sections">
+            <section class="task-block">
+              <h3>学习内容</h3>
+              <ul id="studyList"></ul>
+            </section>
+            <section class="task-block">
+              <h3>今日任务</h3>
+              <ul id="taskList"></ul>
+            </section>
+            <section class="task-block">
+              <h3>交付结果</h3>
+              <ul id="outputList"></ul>
+            </section>
+          </div>
+
+          <div class="note-panel">
+            <div class="note-heading">
+              <label for="noteInput">学习笔记</label>
+              <span id="saveState">已自动保存</span>
+            </div>
+            <textarea id="noteInput" rows="8" placeholder="记录今天遇到的问题、解决方法和明天要复习的点"></textarea>
+          </div>
+
+          <div class="actions">
+            <button id="prevDayButton" class="secondary-button day-nav-button" type="button">前一天</button>
+            <button id="completeButton" class="primary-button" type="button">已完成</button>
+            <button id="nextDayButton" class="secondary-button day-nav-button" type="button">后一天</button>
+          </div>
+
+          <section id="newsPanel" class="news-panel" hidden>
+            <div class="section-head">
+              <div>
+                <h3>昨日技术动态</h3>
+                <p id="newsHint"></p>
+              </div>
+              <button id="refreshNews" class="ghost-button neutral" type="button">刷新</button>
+            </div>
+            <div id="newsList" class="news-list"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div id="overviewModal" class="modal-backdrop" hidden>
+      <section class="overview-modal" role="dialog" aria-modal="true" aria-labelledby="overviewTitle">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">学习进度</p>
+            <h2 id="overviewTitle">45 天总体完成情况</h2>
+          </div>
+          <button id="closeOverview" class="icon-button" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="overview-stats">
+          <strong id="overviewCount">0/45</strong>
+          <span id="overviewPercent">完成 0%</span>
+        </div>
+        <div id="overviewGrid" class="overview-grid"></div>
+        <div class="overview-legend" aria-label="颜色说明">
+          <span><i class="legend-dot done"></i>已完成</span>
+          <span><i class="legend-dot overdue"></i>逾期未完成</span>
+          <span><i class="legend-dot pending"></i>未到期</span>
+        </div>
+      </section>
+    </div>
+
+    <script src="./app.js?v=20260519-11"></script>
+  </body>
+</html>
