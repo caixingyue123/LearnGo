@@ -75,6 +75,372 @@ LearnGo/
 | 第 5 阶段 | Day 28-34 | MySQL、Redis、鉴权 | 能写常见业务后端 |
 | 第 6 阶段 | Day 35-45 | 完整项目和工程化 | 完成一个可运行后端项目 |
 
+## 每日任务明确版
+
+下面这一节是对每天任务的进一步说明。网页里会保留简洁版任务，真正写代码时优先看这里。
+
+### Day 1：环境搭建和 Hello World
+
+- 在 `day01-hello` 目录里创建 `main.go`，不要先拆包，一个文件即可。
+- `main.go` 里必须包含 `package main`、`import "fmt"`、`func main()`。
+- 使用 `fmt.Println("Hello, Go!")` 输出内容，不需要用户输入。
+- 分别运行 `go run main.go` 和 `go build`，确认一个是直接运行，一个是生成可执行文件。
+- 在笔记里写清楚：`go run` 和 `go build` 的区别是什么。
+
+### Day 2：变量、常量和基础类型
+
+- 写一个固定数据的个人信息打印程序，不需要命令行输入，也不需要 `fmt.Scan`。
+- 至少定义这些变量：姓名、年龄、身高、是否正在学习 Go。
+- 要同时练习两种声明方式：用 `var` 声明姓名和年龄，用 `:=` 声明身高和布尔值。
+- 用 `const` 定义一个固定值，例如学校名、城市名或学习目标。
+- 使用 `fmt.Printf` 打印，并练习 `%s`、`%d`、`%.2f`、`%t`。
+- 类型转换要明确写出来，例如把 `int` 转成 `float64` 再计算，不要依赖隐式转换。
+
+### Day 3：条件、循环和 switch
+
+- 成绩评级程序先使用固定分数变量，例如 `score := 86`，不需要输入。
+- 使用 `if / else if / else` 实现分数评级：90 以上 A，80-89 B，70-79 C，60-69 D，60 以下 E。
+- 再用 `switch` 写一个星期判断程序，例如 `day := 3` 输出星期三。
+- 1-100 求和必须用 `for i := 1; i <= 100; i++` 写一遍。
+- 再写一个只累加偶数的版本，练习 `continue`。
+
+### Day 4：数组、切片和 map
+
+- 使用切片保存成绩，例如 `scores := []int{88, 92, 76, 60, 99}`。
+- 不要先写复杂输入，先用固定数据完成统计逻辑。
+- 写出平均分、最高分、最低分，平均分要用 `float64`，避免整数除法。
+- 用 `append` 给切片新增一个成绩，打印新增前后的 `len` 和 `cap`。
+- 用 `map[string]int` 保存姓名和成绩，完成新增、修改、删除、查询四种操作。
+
+### Day 5：函数基础
+
+- 把 Day 4 的成绩统计拆成函数，不要把所有逻辑继续堆在 `main`。
+- 至少写 4 个函数：`sum(scores []int) int`、`avg(scores []int) float64`、`max(scores []int) int`、`min(scores []int) int`。
+- 函数参数使用切片，不要使用全局变量。
+- `avg` 里要处理空切片，避免除以 0。
+- 写一个可变参数函数，例如 `printNames(names ...string)`。
+
+### Day 6：指针入门
+
+- 定义一个 `age := 18`，分别写两个函数：一个接收 `int`，一个接收 `*int`。
+- 用值传递的函数尝试修改年龄，观察外部变量没有变化。
+- 用指针传递的函数修改年龄，观察外部变量发生变化。
+- 打印 `&age`，理解变量地址是什么。
+- 不需要使用复杂结构体，先把 `&` 和 `*` 理解清楚。
+
+### Day 7：命令行计算器
+
+- 这个项目需要使用命令行参数，不使用 `fmt.Scan`。
+- 支持这种格式：`go run main.go add 3 5`。
+- 操作符先支持 `add`、`sub`、`mul`、`div` 四种字符串。
+- 使用 `strconv.Atoi` 把参数转成数字，转换失败要打印错误。
+- 参数数量不足、未知操作符、除数为 0 都要单独处理。
+- 计算逻辑可以先写在 `main.go`，后面 Day 12 再拆包。
+
+### Day 8：结构体 struct
+
+- 定义 `User` 结构体，字段包含 `ID`、`Name`、`Age`、`Email`。
+- 定义 `Article` 结构体，字段包含 `ID`、`Title`、`Content`、`AuthorID`。
+- 使用结构体字面量创建对象，例如 `User{ID: 1, Name: "Tom"}`。
+- 写两个打印函数：`printUser(user User)` 和 `printArticle(article Article)`。
+- 练习结构体指针：创建 `userPtr := &user` 并修改用户名。
+
+### Day 9：方法 method
+
+- 在 Day 8 的 `User` 基础上继续写。
+- 给 `User` 添加 `ChangeName(newName string)` 方法，使用指针接收者。
+- 给 `User` 添加 `IsAdult() bool` 方法，使用值接收者。
+- 对比值接收者和指针接收者：哪个能修改原对象，哪个只是读取。
+- 不要为了所有方法都用指针，先按“会不会修改对象”来判断。
+
+### Day 10：接口 interface
+
+- 定义接口 `Notifier`，包含方法 `Send(to string, message string) error`。
+- 写两个实现：`EmailNotifier` 和 `SMSNotifier`。
+- 不要显式写 `implements`，Go 会自动判断是否实现接口。
+- 写函数 `notify(n Notifier)`，分别传入两个不同实现。
+- 最后用一句笔记说明：接口变量保存的是“能做这件事的对象”，不是某个具体结构体。
+
+### Day 11：错误处理 error
+
+- 改造 Day 7 的计算器，计算函数返回 `(int, error)`。
+- 不要在计算函数里直接 `fmt.Println` 错误，应该返回错误给调用者。
+- 使用 `errors.New` 处理简单错误，例如除数为 0。
+- 使用 `fmt.Errorf` 带上上下文，例如 `fmt.Errorf("invalid number: %s", input)`。
+- 在 `main` 函数里统一判断错误并打印。
+
+### Day 12：包、模块和项目拆分
+
+- 新建 `day12-module`，执行 `go mod init learn-go/day12-module`。
+- 创建 `calculator` 目录，把加减乘除逻辑放进去。
+- `calculator` 包里的函数首字母大写，例如 `Calculate`，这样 `main` 包才能调用。
+- `main.go` 只负责读取参数、调用包、打印结果。
+- 运行 `go test ./...`，即使还没有测试，也要熟悉这个命令。
+
+### Day 13：泛型入门
+
+- 写泛型函数 `Contains[T comparable](items []T, target T) bool`。
+- 用 `[]int` 和 `[]string` 分别测试一次。
+- 写 `Max` 时先只支持 `int` 和 `float64`，不要一开始追求覆盖所有数字类型。
+- 可以定义类型约束：`type Number interface { int | float64 }`。
+- 在笔记里写明：为什么 `Contains` 需要 `comparable`。
+
+### Day 14：内存版 Todo
+
+- 定义 `Todo` 结构体：`ID`、`Title`、`Done`、`CreatedAt`。
+- 定义 `TodoStore` 结构体，用切片保存 Todo，并维护自增 ID。
+- 方法至少包含：`Add`、`List`、`Done`、`Delete`。
+- 先用固定调用模拟操作，不需要做复杂命令行交互。
+- 每个方法都要考虑错误情况，例如删除不存在的 ID。
+
+### Day 15：文件读写和 JSON
+
+- 基于 Day 14 的 Todo 继续写，不要重新发明一套结构。
+- 程序启动时尝试读取 `todos.json`，文件不存在时使用空列表。
+- 每次新增、完成、删除后，把 Todo 列表写回 JSON 文件。
+- 使用结构体 tag，例如 `json:"title"`。
+- JSON 文件要格式化输出，可以使用 `json.MarshalIndent`。
+
+### Day 16：时间、字符串和常用标准库
+
+- 给 Todo 增加 `CreatedAt time.Time` 字段。
+- 列表展示时按创建时间排序，使用 `sort.Slice`。
+- 搜索功能用 `strings.Contains`，先做大小写敏感版本即可。
+- 验证码生成使用固定字符集，例如数字和大小写字母。
+- 数字和字符串转换统一使用 `strconv`，不要手写拼接转换逻辑。
+
+### Day 17：单元测试
+
+- 给计算器写测试，不要先测试打印输出，测试纯函数返回值。
+- 测试文件命名为 `calculator_test.go`。
+- 使用表格驱动测试，一组用例包含输入、期望结果、是否期望错误。
+- 至少测试：正常加法、正常除法、除数为 0、未知操作符、非法参数。
+- 运行 `go test ./...`，确保测试通过。
+
+### Day 18：goroutine
+
+- 写一个 `download(id int)` 函数，用 `time.Sleep` 模拟下载耗时。
+- 启动 5 个 goroutine，每个任务打印开始和结束。
+- 使用 `sync.WaitGroup` 等待所有任务完成。
+- 不要用固定 `time.Sleep` 等主程序结束，必须用 WaitGroup。
+- 在笔记里写清楚：为什么 main 函数退出后 goroutine 也会结束。
+
+### Day 19：channel
+
+- 创建一个 `jobs := make(chan int)`。
+- 一个生产者 goroutine 往 jobs 里写入 1-10。
+- 三个消费者 goroutine 从 jobs 中读取并处理。
+- 生产者写完后必须 `close(jobs)`。
+- 消费者使用 `for job := range jobs`，不要无限死循环。
+
+### Day 20：context
+
+- 写函数 `mockRequest(ctx context.Context)`，内部用 `select` 同时监听任务完成和 ctx 取消。
+- 使用 `context.WithTimeout(context.Background(), 2*time.Second)` 设置超时。
+- 模拟一个 3 秒才完成的任务，观察它被取消。
+- 再模拟一个 1 秒完成的任务，观察它正常结束。
+- 在函数参数里传 `ctx`，不要在函数内部自己创建根 context。
+
+### Day 21：HTTP 基础
+
+- 使用标准库 `net/http`，不要使用 Gin。
+- 写 `/ping`，返回纯文本 `pong`。
+- 写 `/hello`，从 query 参数读取 `name`，例如 `/hello?name=Tom`。
+- 没传 name 时返回默认值，例如 `Hello, guest`。
+- 用浏览器或 curl 访问接口，确认状态码是 200。
+
+### Day 22：RESTful API 设计
+
+- 使用标准库继续写 Todo API。
+- 内存保存 Todo，不连接数据库。
+- 接口至少包含：`POST /todos`、`GET /todos`、`GET /todos/{id}`。
+- 请求和响应都使用 JSON。
+- 错误响应也用 JSON，例如 `{"error":"todo not found"}`。
+
+### Day 23：Gin 框架入门
+
+- 用 Gin 重写 Day 21 和 Day 22 的接口。
+- 使用 `c.JSON` 返回 JSON，不要手动拼字符串。
+- 使用 `ShouldBindJSON` 绑定创建 Todo 的请求体。
+- 路由分组可以先简单使用 `/api/v1`。
+- 保持内存存储，不要急着接数据库。
+
+### Day 24：中间件
+
+- 写一个日志中间件，打印请求方法、路径、耗时。
+- 中间件里要先记录开始时间，再 `c.Next()`，最后计算耗时。
+- 写一个简单 token 中间件，要求 Header 里有 `Authorization`。
+- token 可以先写死，例如 `Bearer dev-token`。
+- 只把 token 中间件应用到需要保护的路由上。
+
+### Day 25：参数校验和统一响应
+
+- 定义统一响应结构，例如 `Response{Code, Message, Data}`。
+- 成功时统一返回 `Code: 0`。
+- 失败时统一返回非 0 code 和错误 message。
+- Todo 标题不能为空，长度不要超过 100。
+- 参数错误返回 400，资源不存在返回 404。
+
+### Day 26：日志、配置和分层
+
+- 把代码拆成 `handler`、`service`、`repository`。
+- handler 只处理 HTTP 参数和响应。
+- service 只处理业务逻辑，例如标题校验、状态变化。
+- repository 只处理数据保存，当前仍然可以是内存实现。
+- `config.yaml` 至少包含端口，例如 `server.port: 8080`。
+
+### Day 27：内存版博客 API
+
+- 定义 `Article`：`ID`、`Title`、`Content`、`Author`、`CreatedAt`、`UpdatedAt`。
+- 实现文章创建、列表、详情、更新、删除。
+- 列表接口支持分页参数 `page` 和 `page_size`。
+- 更新文章时要修改 `UpdatedAt`。
+- 删除不存在的文章要返回明确错误。
+
+### Day 28：MySQL 基础
+
+- 用 Docker 启动 MySQL，先保证本地能连上。
+- 手写 `users` 和 `articles` 建表 SQL。
+- `users.email` 加唯一索引。
+- `articles.user_id` 表示作者 ID。
+- 手写 insert、select、update、delete，每种至少执行一次。
+
+### Day 29：Go 连接 MySQL
+
+- 使用 `database/sql` 和 MySQL driver。
+- 连接字符串不要写散在多个地方，定义成变量。
+- 使用 `db.Ping()` 检查连接是否成功。
+- 实现用户新增、根据 ID 查询、列表查询。
+- SQL 参数必须使用占位符，不要字符串拼接，避免 SQL 注入。
+
+### Day 30：GORM 入门
+
+- 定义 `User` 和 `Article` GORM model。
+- 使用 `AutoMigrate` 自动建表。
+- 实现 Create、First、Find、Save、Delete。
+- 观察 GORM 生成的表名和字段名。
+- 不要只会调用 ORM，也要对照 Day 28 的 SQL 理解它在做什么。
+
+### Day 31：数据库设计和分页查询
+
+- 给文章表增加 `user_id`，表示一对多关系。
+- 分页参数使用 `page` 和 `page_size`，默认值要合理。
+- 使用 `Limit` 和 `Offset` 实现分页。
+- 支持标题关键词搜索，使用 `LIKE`。
+- 返回列表时同时返回总数 `total`。
+
+### Day 32：Redis 基础
+
+- 用 Docker 启动 Redis，并用 `redis-cli ping` 确认可用。
+- 练习 `set`、`get`、`hset`、`hget`、`lpush`、`lrange`。
+- Go 程序使用 Redis 客户端连接。
+- 实现验证码保存：key 包含手机号或邮箱，value 是验证码。
+- 设置 5 分钟过期时间，并验证过期后读取不到。
+
+### Day 33：Redis 缓存
+
+- 给文章详情增加缓存，key 例如 `article:detail:{id}`。
+- 查询流程：先查 Redis，命中直接返回；未命中查 MySQL，再写 Redis。
+- 更新文章后删除缓存，不要直接改缓存。
+- 缓存内容可以存 JSON 字符串。
+- 在日志里打印 cache hit / cache miss，方便观察。
+
+### Day 34：登录注册和 JWT
+
+- 注册接口接收用户名、邮箱、密码。
+- 密码不能明文保存，使用 bcrypt hash。
+- 登录时校验邮箱和密码。
+- 登录成功后生成 JWT，返回给前端。
+- 写 Gin 中间件解析 JWT，保护创建、更新、删除文章接口。
+
+### Day 35：最终项目启动
+
+- 创建 `final-project`，不要直接在前面 demo 上乱改。
+- 初始化 Go Module。
+- 建立目录：`cmd`、`internal`、`configs`、`docs`、`scripts`。
+- 在 `docs/api.md` 先写接口草稿，不要求一次完整。
+- README 先写项目目标、技术栈、启动方式占位。
+
+### Day 36：项目数据库设计
+
+- 设计 `users`、`projects`、`project_members`、`tasks`、`comments`。
+- 每张表都要有 `id`、`created_at`、`updated_at`。
+- 用户邮箱加唯一索引。
+- project_members 要能表达成员角色，例如 owner、member。
+- 用 GORM model 写出这些表，并准备初始化 SQL。
+
+### Day 37：配置、日志和启动
+
+- `config.yaml` 包含服务端口、MySQL、Redis 配置。
+- 写配置加载函数，启动时读取配置。
+- 初始化数据库连接和 Redis 连接。
+- Gin 服务提供 `/ping`。
+- 日志至少能打印服务启动端口和数据库连接结果。
+
+### Day 38：用户注册和登录
+
+- 用户注册需要校验邮箱是否已存在。
+- 密码至少做长度校验，例如不能少于 6 位。
+- 登录成功返回 JWT。
+- `GET /api/v1/users/me` 从 JWT 中读取用户 ID。
+- 错误返回要清楚区分：参数错误、用户不存在、密码错误。
+
+### Day 39：Project 模块
+
+- 创建项目时，当前登录用户自动成为 owner。
+- 查询我的项目列表时，只返回我参与的项目。
+- 项目详情要校验我是否是项目成员。
+- 邀请成员时先按邮箱查用户，再写入 project_members。
+- 重复邀请同一个用户要返回明确错误。
+
+### Day 40：Task 模块
+
+- 任务必须属于某个 project。
+- 创建任务时字段包含标题、描述、状态、负责人。
+- 状态只允许 `todo`、`doing`、`done`。
+- 查询任务列表支持按状态筛选。
+- 修改任务状态前要校验当前用户是否是项目成员。
+
+### Day 41：Comment 模块和权限
+
+- 评论必须属于某个 task。
+- 创建评论时记录评论人 ID。
+- 查询评论列表时按创建时间排序。
+- 只有项目成员能看任务和评论。
+- 删除任务或评论时，先写清楚规则，再写代码实现，不要随意放开权限。
+
+### Day 42：Redis 缓存和限流
+
+- 选择一个详情接口加缓存，例如项目详情或任务详情。
+- Redis key 要有统一命名，例如 `taskflow:task:{id}`。
+- 登录接口按 IP 做简单限流。
+- 限流可以用 Redis 计数器加过期时间实现。
+- 超过限制返回 429。
+
+### Day 43：测试和接口文档
+
+- 至少给用户注册、登录、任务创建写测试。
+- 测试优先覆盖 service 层，不要一开始就测所有 HTTP 细节。
+- `docs/api.md` 写清楚请求方法、路径、请求体、响应示例。
+- 每个核心接口至少给一个 curl 示例。
+- 运行 `go test ./...` 并记录结果。
+
+### Day 44：Docker Compose 和部署入门
+
+- 写 Dockerfile 构建 Go 服务。
+- docker-compose 包含 api、mysql、redis 三个服务。
+- MySQL 和 Redis 的地址从环境变量或配置文件读取。
+- API 服务依赖 MySQL 和 Redis，但代码里仍要做连接失败处理。
+- 使用 `docker compose up` 验证三个服务能一起启动。
+
+### Day 45：项目收尾和复盘
+
+- README 写清楚项目介绍、功能列表、技术栈、启动方式。
+- 整理接口文档，确保别人照着文档能调用接口。
+- 写一份复盘：最难的 10 个问题和解决方式。
+- 检查是否还有硬编码密码、无用代码、无法运行的示例。
+- 最后打 tag：`git tag v0.1.0`。
+
 ## Day 1：环境搭建和 Hello World
 
 学习内容：
